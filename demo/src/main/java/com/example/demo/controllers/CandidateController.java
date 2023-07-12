@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.domain.RequestCandidate;
 import com.example.demo.domain.candidate.Candidate;
 import com.example.demo.domain.candidate.CandidateRepository;
+import java.util.regex.Pattern;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/v1/hiring")
 public class CandidateController {
@@ -35,6 +37,10 @@ public class CandidateController {
     public ResponseEntity<?> createCandidate(@RequestBody @Validated RequestCandidate data) {
         String nome = data.name();
 
+        if (!Pattern.matches("[a-zA-Z]+", nome)) {
+            return ResponseEntity.badRequest().body("Nome de candidato inválido.");
+        }    
+
         for (Candidate candidate : repository.findAll()) {
             if (candidate.getName().equalsIgnoreCase(nome)) {
                 return ResponseEntity.badRequest().body("Candidato já participa do processo.");
@@ -42,7 +48,7 @@ public class CandidateController {
         }
 
         Candidate newCandidate = new Candidate(data);
-        newCandidate.setStatus("Recebidos");
+        newCandidate.setStatus("Recebido");
         repository.save(newCandidate);
         return ResponseEntity.ok(newCandidate);
     }

@@ -21,14 +21,12 @@ public class Candidate {
 
     private String name;
 
-
-    @Column(columnDefinition = "TEXT DEFAULT 'Recebidos'")
     private String status;
 
     public Candidate(RequestCandidate requestCandidate){
         this.name = requestCandidate.name();
         this.codCandidate = requestCandidate.codCandidate();
         this.status = requestCandidate.status();
-    }
+   }
 
 }
