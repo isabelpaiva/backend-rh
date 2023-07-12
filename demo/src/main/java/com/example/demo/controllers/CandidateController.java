@@ -9,9 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.domain.RequestCandidate;
 import com.example.demo.domain.candidate.Candidate;
 import com.example.demo.domain.candidate.CandidateRepository;
+import com.example.demo.domain.candidate.RequestCandidate;
+
 import java.util.regex.Pattern;
 
 @RestController

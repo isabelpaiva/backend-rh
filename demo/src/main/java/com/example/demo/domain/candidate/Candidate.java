@@ -1,6 +1,4 @@
 package com.example.demo.domain.candidate;
-import com.example.demo.domain.RequestCandidate;
-
 import jakarta.persistence.*;
 import lombok.*;
 
