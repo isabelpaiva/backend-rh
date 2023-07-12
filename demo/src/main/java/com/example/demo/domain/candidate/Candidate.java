@@ -11,13 +11,13 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "codCandidate")
+@EqualsAndHashCode(of = "codCandidato")
 
 public class Candidate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codCandidate;
+    private Long codCandidato;
 
     private String name;
 
@@ -25,7 +25,7 @@ public class Candidate {
 
     public Candidate(RequestCandidate requestCandidate){
         this.name = requestCandidate.name();
-        this.codCandidate = requestCandidate.codCandidate();
+        this.codCandidato = requestCandidate.codCandidato();
         this.status = requestCandidate.status();
    }
 

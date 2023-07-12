@@ -21,9 +21,9 @@ public class CandidateController {
     @Autowired
     private CandidateRepository repository;
 
-    @GetMapping("/status/candidate/{codCandidate}")
-    public ResponseEntity<?> getCandidate(@PathVariable Long codCandidate) {
-        Optional<Candidate> candidate = repository.findById(codCandidate);
+    @GetMapping("/status/candidate/{codCandidato}")
+    public ResponseEntity<?> getCandidate(@PathVariable Long codCandidato) {
+        Optional<Candidate> candidate = repository.findById(codCandidato);
 
         if (candidate.isPresent()) {
             return ResponseEntity.ok(candidate.get());
@@ -36,7 +36,7 @@ public class CandidateController {
     public ResponseEntity<?> createCandidate(@RequestBody @Validated RequestCandidate data) {
         String nome = data.name();
 
-        if (!Pattern.matches("[a-zA-Z]+", nome)) {
+        if (!Pattern.matches("[\\p{L}\\s]+", nome)) {
             return ResponseEntity.badRequest().body("Nome de candidato inválido.");
         }    
 
@@ -54,7 +54,7 @@ public class CandidateController {
 
     @PostMapping("/schedule")
     public ResponseEntity<?> scheduleInterview(@RequestBody RequestCandidate requestCandidate) {
-        Optional<Candidate> candidateOptional = repository.findById(requestCandidate.codCandidate());
+        Optional<Candidate> candidateOptional = repository.findById(requestCandidate.codCandidato());
     
         if (candidateOptional.isPresent()) {
             Candidate candidate = candidateOptional.get();
@@ -74,8 +74,8 @@ public class CandidateController {
 
     @PostMapping("/approve")
     public ResponseEntity<String> approveCandidate(@RequestBody Map<String, Long> requestBody) {
-        Long codCandidate = requestBody.get("codCandidate");
-        Optional<Candidate> candidateOptional = repository.findById(codCandidate);
+        Long codCandidato = requestBody.get("codCandidato");
+        Optional<Candidate> candidateOptional = repository.findById(codCandidato);
 
         if (candidateOptional.isPresent()) {
             Candidate candidate = candidateOptional.get();
@@ -93,8 +93,8 @@ public class CandidateController {
 
     @PostMapping("/disqualify")
     public ResponseEntity<String> disqualifyCandidate(@RequestBody Map<String, Long> requestBody) {
-        Long codCandidate = requestBody.get("codCandidate");
-        Optional<Candidate> candidateOptional = repository.findById(codCandidate);
+        Long codCandidato = requestBody.get("codCandidato");
+        Optional<Candidate> candidateOptional = repository.findById(codCandidato);
 
         if (candidateOptional.isPresent()) {
             repository.delete(candidateOptional.get());
