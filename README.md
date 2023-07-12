@@ -36,7 +36,7 @@ POST /disqualify - Desqualifica um candidato.
 
 POST /approve - Aprova um candidato.
 
-GET /candidate{id} - Lista um candidato.
+GET /candidate{codCandidate} - Lista um candidato.
 
 GET /approved - Lista todos os aprovados.
 
