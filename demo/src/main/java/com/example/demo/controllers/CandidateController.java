@@ -14,7 +14,6 @@ import com.example.demo.domain.candidate.Candidate;
 import com.example.demo.domain.candidate.CandidateRepository;
 import java.util.regex.Pattern;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/v1/hiring")
 public class CandidateController {
@@ -56,12 +55,16 @@ public class CandidateController {
     @PostMapping("/schedule")
     public ResponseEntity<?> scheduleInterview(@RequestBody RequestCandidate requestCandidate) {
         Optional<Candidate> candidateOptional = repository.findById(requestCandidate.codCandidate());
-
+    
         if (candidateOptional.isPresent()) {
             Candidate candidate = candidateOptional.get();
-            candidate.setStatus("Qualificado");
-            repository.save(candidate);
-            return ResponseEntity.ok(candidate);
+            if (candidate.getStatus().equals("Qualificado")) {
+                return ResponseEntity.badRequest().body("Candidato já está qualificado");
+            } else {
+                candidate.setStatus("Qualificado");
+                repository.save(candidate);
+                return ResponseEntity.ok(candidate);
+            }
         } else {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
